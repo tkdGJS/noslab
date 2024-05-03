@@ -1,11 +1,18 @@
+discard=$1
+
 umount ./mnt
 
 sleep 120
 
 mkfs.ext4 -F -E lazy_itable_init=0,lazy_journal_init=0 /dev/sda
 
-mount /dev/sda ./mnt
+sleep 120
+
+#mount -o nodiscard /dev/sda ./mnt
+mount -o $discard /dev/sda ./mnt
 echo "mount success\n"
+
+
 
 echo "\n"
 echo "directory mount,,,\n"

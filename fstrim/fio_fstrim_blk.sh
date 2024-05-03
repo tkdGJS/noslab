@@ -39,6 +39,7 @@ fio \
 --size=$size \
 --direct=0 \
 --buffered=1 \
+--thread \
 --group_reporting \
 --per_job_logs=0 \
 --numjobs=$num \
@@ -63,7 +64,9 @@ time1=$(date +%s.%N)
 fstrim -v -m 1 ./mnt
 time2=$(date +%s.%N)
 
+diff=$(echo "$time2 - $time1" | bc)
+
 sleep 300
-echo "$fs-$bs-$size-$num-$rw, fstrim time is : $time2 - $time1" >> result
+echo "$fs-$bs-$size-$num-$rw, fstrim time is : $diff" >> result
 kill $blk
 pkill -f blktrace

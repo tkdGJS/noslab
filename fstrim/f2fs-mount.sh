@@ -1,10 +1,14 @@
+discard=$1
+
 umount ./mnt
 
 sleep 120
 
 mkfs.f2fs -f /dev/sda
 
-mount /dev/sda ./mnt
+sleep 120
+
+mount -o $discard /dev/sda ./mnt
 echo "mount success\n"
 
 echo "\n"
