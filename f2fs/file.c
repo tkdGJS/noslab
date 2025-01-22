@@ -217,6 +217,8 @@ static inline enum cp_reason_type need_do_checkpoint(struct inode *inode)
 							TRANS_DIR_INO))
 		cp_reason = CP_RECOVER_DIR;
 
+        int cpu = sched_getcpu();
+	printk("[F2FS] %s, cp_reason : %d, cpu : %d\n", __func__, cp_reason, cpu);
 	return cp_reason;
 }
 
@@ -259,6 +261,9 @@ static int f2fs_do_sync_file(struct file *file, loff_t start, loff_t end,
 		.for_reclaim = 0,
 	};
 	unsigned int seq_id = 0;
+
+        int cpu = sched_getcpu();
+	printk("[F2FS] %s, io_type : %d, cpu : %d\n", __func__, io_type, cpu);
 
 	if (unlikely(f2fs_readonly(inode->i_sb)))
 		return 0;

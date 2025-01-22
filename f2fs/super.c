@@ -1593,6 +1593,9 @@ int f2fs_sync_fs(struct super_block *sb, int sync)
 	struct f2fs_sb_info *sbi = F2FS_SB(sb);
 	int err = 0;
 
+        int cpu = sched_getcpu();
+	printk("[F2FS] %s, sync : %d, cpu : %d\n", __func__, sync, cpu);
+
 	if (unlikely(f2fs_cp_error(sbi)))
 		return 0;
 	if (unlikely(is_sbi_flag_set(sbi, SBI_CP_DISABLED)))

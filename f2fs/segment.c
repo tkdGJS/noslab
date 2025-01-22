@@ -515,6 +515,10 @@ void f2fs_balance_fs(struct f2fs_sb_info *sbi, bool need)
 	 * dir/node pages without enough free segments.
 	 */
 	if (has_not_enough_free_secs(sbi, 0, 0)) {
+
+		int cpu = sched_getcpu();
+		printk("[F2FS] %s, cpu : %d\n", __func__, cpu);
+
 		if (test_opt(sbi, GC_MERGE) && sbi->gc_thread &&
 					sbi->gc_thread->f2fs_gc_task) {
 			DEFINE_WAIT(wait);
@@ -3406,6 +3410,9 @@ void f2fs_allocate_data_block(struct f2fs_sb_info *sbi, struct page *page,
 	unsigned long long old_mtime;
 	bool from_gc = (type == CURSEG_ALL_DATA_ATGC);
 	struct seg_entry *se = NULL;
+
+        int cpu = sched_getcpu();
+	printk("[F2FS] %s, type : %d, cpu : %d\n", __func__, type, cpu);
 
 	down_read(&SM_I(sbi)->curseg_lock);
 
